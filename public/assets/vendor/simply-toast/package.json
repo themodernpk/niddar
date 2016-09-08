@@ -1,0 +1,19 @@
+{
+  "name": "simply-toast",
+  "version": "1.0.0",
+  "description": "simply-toast === Simple toast messages for jQuery (and friends)",
+  "main": "simply-toast.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericprieto/simply-toast.git"
+  },
+  "author": "Eric Prieto <ericprieto@live.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ericprieto/simply-toast/issues"
+  },
+  "homepage": "https://github.com/ericprieto/simply-toast#readme"
+}

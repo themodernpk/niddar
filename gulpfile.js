@@ -14,7 +14,7 @@ gulp.task('watch', function () {
     gulp.watch('assets/**/*.*', ['backendjs', 'backendcss']);
 });
 //--------------------------------------------------
-gulp.task('build', ['backendjs', 'backendcss', 'bowerjs', 'bowercss', 'fonts']);
+gulp.task('build', ['backendjs', 'backendcss', 'bowerjs', 'bowercss', 'fonts', 'vendor']);
 //--------------------------------------------------
 gulp.task('backendjs', function() {
     gulp.src('assets/backend/pages/**/*.js')
@@ -53,5 +53,11 @@ gulp.task('fonts', function() {
     return gulp.src('./bower_components/**/fonts/*')
         .pipe(flatten())
         .pipe(gulp.dest('./public/assets/fonts/'));
+});
+//--------------------------------------------------
+// Basic usage
+gulp.task('vendor', function() {
+    gulp.src('assets/vendor/**/*')
+        .pipe(gulp.dest('./public/assets/vendor'))
 });
 //--------------------------------------------------

@@ -5,8 +5,20 @@
 {% block page_specific_head %}{% endblock %}
 <!--page specific head-->
 <body class="{% if data.bodyClass %}{{ data.bodyClass }}{% endif %}">
-{% block content %}
-{% endblock %}
+
+{% include "./partials/header.njk" %}
+
+<div class="container-fluid m-t-50" >
+    <div class="row">
+        {% include "./partials/sidebar.njk" %}
+        <div class="col-sm-12 col-md-9 col-lg-10">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+</div>
 
 {% include "./partials/footer.njk" %}
 <!--common js-->

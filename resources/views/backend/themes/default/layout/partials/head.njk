@@ -3,8 +3,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if data.title %}{{ data.title }}{% else %}ACL App v1.0{% endif %}</title>
-    <link href="/assets/backend/bower.css" rel="stylesheet">
-    <link href="/assets/backend/pages/common.css" rel="stylesheet">
+    <link href="/assets/bower/bower.css" rel="stylesheet">
+    <link href="{{ vendor_directory }}/simply-toast/simply-toast.min.css" rel="stylesheet">
+    <link href="{{ backend_assets_directory }}/pages/common.css" rel="stylesheet">
+    <link href="{{ backend_assets_directory }}/pages/bootstrap-theme.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>

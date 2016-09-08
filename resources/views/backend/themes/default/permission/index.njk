@@ -1,0 +1,53 @@
+{% extends "./../layout/admin.njk" %}
+//------------------------------------------------------------
+{% block page_specific_footer %}
+    <script src="{{ backend_assets_directory }}/pages/permission.js"></script>
+{% endblock %}
+//------------------------------------------------------------
+{% block content %}
+
+    <input type="text" name="base_url" value="{{ url }}" id="base_url" >
+    <input type="text" name="current_url" value="{{ current_url }}" id="current_url" >
+    <input type="hidden" name="_csrf" id="token" value="{{ csrfToken }}" />
+
+
+
+    <!--content-->
+    <div class="container-fluid" >
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Permissions</h1>
+                <hr/>
+            </div>
+            <div class="col-md-12">
+
+                <div class="pull-right btn-group">
+                    <button class="btn btn-sm btn-primary">Trashed (5)</button>
+                </div>
+
+                <div class="pull-right btn-group" style="margin-right: 5px">
+                    <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#create">Create</a>
+                    <button class="btn btn-sm btn-warning">Enable</button>
+                    <button class="btn btn-sm btn-success">Disable</button>
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </div>
+                <br class="all">
+                <br class="all">
+            </div>
+            <div class="col-md-12" id="data-content">
+
+            </div>
+
+        </div>
+    </div>
+    <!--/content-->
+
+    <!--create form-->
+    {% include "./partials/create.njk" %}
+    <!--/create form-->
+
+    <!--update form-->
+    {% include "./partials/update.njk" %}
+    <!--/update form-->
+
+{% endblock %}

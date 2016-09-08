@@ -11,6 +11,7 @@ class CoreRolesSchema extends Schema {
         table.string('name')
         table.string('slug').unique()
         table.string('details')
+        table.boolean('enable').default(0)
         table.integer('created_by').nullable()
         table.integer('updated_by').nullable()
         table.integer('deleted_by').nullable()

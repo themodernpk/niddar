@@ -16,11 +16,9 @@
   ],
   "dependencies": {
     "jquery": "2.2.4",
-    "vue": "^1.0.26",
     "components-font-awesome": "^4.6.3",
-    "vue-router": "^0.7.13",
-    "vue-resource": "^0.9.3",
     "bootstrap-css": "^3.3.6",
-    "socket.io": "^1.4.8"
+    "socket.io": "^1.4.8",
+    "nprogress": "^0.2.0"
   }
 }

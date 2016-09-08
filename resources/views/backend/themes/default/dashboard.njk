@@ -1,0 +1,18 @@
+{% extends "./layout/admin.njk" %}
+//------------------------------------------------------------
+{% block page_specific_footer %}
+    <script src="{{ backend_assets_directory }}/pages/dashboard.js"></script>
+{% endblock %}
+//------------------------------------------------------------
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Dashboard</h1>
+                <hr/>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

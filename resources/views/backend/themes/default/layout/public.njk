@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "./partials/head.njk" %}
+<!--page specific head-->
+{% block page_specific_head %}{% endblock %}
+<!--page specific head-->
+<body class="{% if data.bodyClass %}{{ data.bodyClass }}{% endif %}">
+<div class="container">
+    <div class="rows">
+        <div class="col-md-12" style="margin-top: 20px;">
+            {% include "./partials/errors.njk" %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="rows">
+        <div class="col-md-12" style="margin-top: 20px;">
+            {% include "./partials/flash.njk" %}
+        </div>
+    </div>
+</div>
+
+{% block content %}
+{% endblock %}
+
+{% include "./partials/footer.njk" %}
+<!--common js-->
+{% include './partials/footer_scripts.njk' %}
+<!--/common js-->
+<!--page specific footer-->
+{% block page_specific_footer %}
+    <script src="{{ backend_assets_directory }}/pages/login.js"></script>
+{% endblock %}
+<!--page specific footer-->
+</body>
+</html>

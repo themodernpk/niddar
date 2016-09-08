@@ -2,6 +2,7 @@
 
 const Env = use('Env')
 const Ouch = use('youch')
+const Niddar = use('App/Niddar')
 const Http = exports = module.exports = {}
 
 /**
@@ -38,4 +39,10 @@ Http.handleError = function * (error, request, response) {
  * starting http server.
  */
 Http.onStart = function () {
+  const View = use('View');
+  //register all the view globals
+  var viewGlobals = Niddar.settings.setViewGlobals();
+  Object.keys(viewGlobals).forEach(function (key) {
+    View.global(key, viewGlobals[key])
+  });
 }

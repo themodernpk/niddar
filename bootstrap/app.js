@@ -27,7 +27,10 @@ const providers = [
   'adonis-lucid/providers/DatabaseProvider',
   'adonis-lucid/providers/LucidProvider',
   'adonis-middleware/providers/AppMiddlewareProvider',
-  'adonis-auth/providers/AuthManagerProvider'
+  'adonis-auth/providers/AuthManagerProvider',
+  'adonis-framework/providers/EncryptionProvider',
+  'adonis-validation-provider/providers/ValidatorProvider',
+  __dirname+'../../providers/Niddar/NiddarProvider',
 ]
 
 /*
@@ -73,7 +76,9 @@ const aliases = {
   Middleware: 'Adonis/Src/Middleware',
   Route: 'Adonis/Src/Route',
   Schema: 'Adonis/Src/Schema',
-  View: 'Adonis/Src/View'
+  View: 'Adonis/Src/View',
+  Encryption : 'Adonis/Src/Encryption',
+  Validator: 'Adonis/Addons/Validator',
 }
 
 /*
