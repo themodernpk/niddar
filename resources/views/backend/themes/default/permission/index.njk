@@ -54,11 +54,12 @@
                 <div class="col-md-12" id="data-content">
                     <table class="table table-bordered table-condensed">
                         <thead>
-                        <tr>
+                        <tr class="">
                             <th>ID</th>
                             <th>Name</th>
                             <th>Slug</th>
-                            <th>Enabled</th>
+                            <th class="text-center">Enabled</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -66,13 +67,24 @@
                             <td>[[item.id]]</td>
                             <td>[[item.name]]</td>
                             <td>[[item.slug]]</td>
-                            <td>[[item.enable]]</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)"
+                                   v-on:click="toggleStatus()"
+                                   v-bind:class="[item.enable ? 'btn-success' : 'btn-danger']"
+                                   data-id="[[item.id]]"
+                                   class="btn btn-xs "><i class="fa " v-bind:class="[item.enable ? 'fa-check' : 'fa-ban']"></i></a>
+                            </td>
+                            <td class="text-center">
+                                <a href="#" class="btn btn-xs btn-info"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)"
+                                   v-on:click="deleteItem()"
+                                   data-id="[[item.id]]"
+                                   class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-
-                [[pagination|json]]
 
                 <nav aria-label="Page navigation">
                     <ul class="pagination">

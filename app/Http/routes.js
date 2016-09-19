@@ -104,5 +104,11 @@ Route.group('bProtected', function () {
     Route.any("/admin/permission/list", 'Niddar/PermissionController.list')
         .as("bPlist");
 
+    Route.any("/admin/permission/toggle/status", 'Niddar/PermissionController.toggleStatus')
+        .as("bPtoggleStatus");
+
+    Route.any("/admin/permission/delete", 'Niddar/PermissionController.delete')
+        .as("bPdelete");
+
 
 }).prefix('/backend').middleware('authBackend');

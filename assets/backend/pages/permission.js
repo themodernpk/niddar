@@ -10,24 +10,28 @@ var vm = new Vue({
         countries: [],
         base_url: null,
         current_url: null,
+        element: null,
+        url: {},
         list: {},
         result: {},
         item: {},
         newItem: {},
         list_url: null,
-        pagination: {},
-        currentPage: 1
+        currentPage: 1,
+        pagination:{}
     },
     ready: function () {
-        this.list_url = this.base_url + "/list";
+        this.url.list = this.base_url + "/list";
+        this.url.create = this.base_url + "/create";
+        this.url.delete = this.base_url + "/delete";
+        this.url.toggleStatus = this.base_url + "/toggle/status";
         this.fetchList();
     },
     methods: {
         //-----------------------------------------
         fetchList: function () {
             NProgress.start();
-            console.log("response", this.list_url);
-            this.$http.get(this.list_url).then((response) => {
+            this.$http.get(this.url.list).then((response) => {
                 NProgress.done();
                 if (response.data.status == "success") {
                     this.list = response.data.data.data;
@@ -40,13 +44,62 @@ var vm = new Vue({
         },
         //-----------------------------------------
         createItem: function (e) {
-            var url = $("#formCreate").attr("action");
-            console.log("response", url);
-            this.$http.post(url, this.newItem).then((response) => {
+            console.log("response", this.newItem);
+            this.$http.post(this.url.create, this.newItem).then((response) => {
+                console.log("response", response.data);
                 this.fetchList();
             }, (response) => {
                 // error callback
             });
+        },
+
+        //-----------------------------------------
+        paginationClicked: function (e) {
+            this.currentPage = event.currentTarget.getAttribute("data-page");
+            this.url.list = this.base_url+"/list?page="+this.currentPage;
+            this.fetchList();
+            this.genPagination()
+        },
+        //-----------------------------------------
+        toggleStatus(e)
+        {
+            this.element = event.currentTarget;
+            var id = $(this.element).attr("data-id");
+
+            var data = {
+                id: id
+            };
+            this.$http.post(this.url.toggleStatus, data).then((response) => {
+                console.log("response", response.data);
+                if(response.data.status == "success")
+                {
+                    this.fetchList();
+                }
+
+            }, (response) => {
+                // error callback
+            });
+
+        },
+        //-----------------------------------------
+        deleteItem(e)
+        {
+            this.element = event.currentTarget;
+            var id = $(this.element).attr("data-id");
+            var data = {
+                id: id
+            };
+            this.$http.post(this.url.delete, data).then((response) => {
+                console.log("response", response.data);
+                if(response.data.status == "success")
+                {
+                    this.fetchList();
+                }
+
+            }, (response) => {
+                // error callback
+            });
+
         },
         //-----------------------------------------
         genPagination: function () {
@@ -56,10 +109,11 @@ var vm = new Vue({
                 lastPage: this.result.data.lastPage,
                 perPage: this.result.data.perPage,
                 currentPage: this.currentPage,
-                pagesToDisplay: 5,
+                pagesToDisplay: 5
             };
             this.pagination.offset = Math.ceil(this.pagination.pagesToDisplay / 2);
             this.pagination.range = {};
+
             if (this.pagination.currentPage != this.pagination.startPage) {
                 this.pagination.range.first = {
                     number: this.pagination.startPage,
@@ -105,13 +159,6 @@ var vm = new Vue({
                 }
             }
         },
-        //-----------------------------------------
-        paginationClicked: function (e) {
-            this.currentPage = event.currentTarget.getAttribute("data-page");
-            this.list_url = this.base_url+"/list?page="+this.currentPage;
-            this.fetchList();
-            this.genPagination()
-        }
         //-----------------------------------------
     }
 });

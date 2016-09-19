@@ -50,20 +50,24 @@ class PermissionController {
             page = data.input.page;
         }
 
-        try {
-            result = yield permission.listItems(page);
-            return response.json(result);
-        } catch (e) {
-            result = {
-                status: "failed",
-                errors: [{message: e.message}]
-            };
-            return response.json(result);
-        }
+        result = yield permission.listItems(page);
+        return response.json(result);
     }
 
     //---------------------------------------------------------
+    *toggleStatus(request, response)
+    {
+        data.input = request.all();
+        result = yield permission.toggleStatus(data.input);
+        return response.json(result);
+    }
     //---------------------------------------------------------
+    *delete(request, response)
+    {
+        data.input = request.all();
+        result = yield permission.deleteItem(data.input);
+        return response.json(result);
+    }
     //---------------------------------------------------------
     //---------------------------------------------------------
     //---------------------------------------------------------
