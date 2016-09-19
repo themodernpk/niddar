@@ -1,76 +1,120 @@
-//------------------------------------------
-(function ($) {
-    "use strict";
-
-    //----------------------------------------
-    var records = {
-        filters: {},
-        template: "<li>tests</li>",
-        init: function () {
-            this.filters.base_url = $("#base_url").val();
-            this.filters.current_url = $("#current_url").val();
-            this.filters.token = $("#token").val();
-            this.create_form = $("#formCreate");
-            this.bindEvents();
-            this.fetchList();
-        },
-        bindEvents: function () {
-            $("#formCreate").on("submit", this.createItem.bind(this));
-        },
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+Vue.config.delimiters = ['[[', ']]'];
+Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+var vm = new Vue({
+    el: '#vueApp',
+    data: {
+        countries: [],
+        base_url: null,
+        current_url: null,
+        list: {},
+        result: {},
+        item: {},
+        newItem: {},
+        list_url: null,
+        pagination: {},
+        currentPage: 1
+    },
+    ready: function () {
+        this.list_url = this.base_url + "/list";
+        this.fetchList();
+    },
+    methods: {
+        //-----------------------------------------
         fetchList: function () {
-            var url = this.filters.base_url+"/list";
-
-            $.ajax({
-                dataType: "json",
-                url: url,
-                data: this.filters,
-                headers: {
-                    'X-CSRF-TOKEN' : this.filters.token
-                },
-                type: "POST",
-                success: function (data) {
-                    console.log("response", data);
-                    $("#data-content").html(data.html);
-                },
-                error: function (xhr, ajaxOptions, thrownError)
-                {
-                    var log_message = "status = " + xhr.status + " | Message = " + xhr.responseText + " |  Error=" + thrownError;
-                    console.log("Ajax Error=", log_message);
-                    var message = "status = " + xhr.status + " |  Error=" + thrownError + " | Check console for more details";
-                    $.simplyToast(message, 'error');
+            NProgress.start();
+            console.log("response", this.list_url);
+            this.$http.get(this.list_url).then((response) => {
+                NProgress.done();
+                if (response.data.status == "success") {
+                    this.list = response.data.data.data;
+                    this.result = response.data;
+                    this.genPagination();
                 }
+            }, (response) => {
+                // error callback
             });
         },
+        //-----------------------------------------
         createItem: function (e) {
-            e.preventDefault();
-            console.log("response");
-            var element = this.create_form;
-            var url = element.attr("action");
-            var data = {};
-            data.form = element.serialize();
-            data.filters = this.filters;
-
-            console.log("response", data);
-
-            /*Common.ajaxHandler(element, url, data, true);
-            this.fetchList();*/
+            var url = $("#formCreate").attr("action");
+            console.log("response", url);
+            this.$http.post(url, this.newItem).then((response) => {
+                this.fetchList();
+            }, (response) => {
+                // error callback
+            });
+        },
+        //-----------------------------------------
+        genPagination: function () {
+            this.pagination = {
+                totalRecords: this.result.data.total,
+                startPage: 1,
+                lastPage: this.result.data.lastPage,
+                perPage: this.result.data.perPage,
+                currentPage: this.currentPage,
+                pagesToDisplay: 5,
+            };
+            this.pagination.offset = Math.ceil(this.pagination.pagesToDisplay / 2);
+            this.pagination.range = {};
+            if (this.pagination.currentPage != this.pagination.startPage) {
+                this.pagination.range.first = {
+                    number: this.pagination.startPage,
+                }
+            }
+            if (this.pagination.currentPage > this.pagination.startPage) {
+                this.pagination.range.previous = {
+                    number: parseFloat(this.pagination.currentPage) - 1,
+                }
+            }
+            if (this.pagination.currentPage < this.pagination.lastPage) {
+                this.pagination.range.next = {
+                    number: parseFloat(this.pagination.currentPage) + 1,
+                }
+            }
+            if (this.pagination.currentPage != this.pagination.lastPage) {
+                this.pagination.range.last = {
+                    number: this.pagination.lastPage,
+                }
+            }
+            var start = this.pagination.startPage;
+            var end;
+            if (this.pagination.currentPage == 1) {
+                end = this.pagination.pagesToDisplay;
+            }
+            if (this.pagination.currentPage > 1 && this.pagination.currentPage <= this.pagination.lastPage) {
+                start = parseFloat(this.pagination.currentPage) - parseFloat(this.pagination.offset);
+                end = parseFloat(this.pagination.currentPage) + parseFloat(this.pagination.offset);
+            }
+            if (start < 1) {
+                start = 1;
+            }
+            if (end > this.pagination.lastPage) {
+                end = this.pagination.lastPage;
+            }
+            this.pagination.range.pages = {};
+            for (start; start <= end; start++) {
+                this.pagination.range.pages[start] = {
+                    number: start,
+                };
+                if (start == this.pagination.currentPage) {
+                    this.pagination.range.pages[start].isCurrent = true;
+                }
+            }
+        },
+        //-----------------------------------------
+        paginationClicked: function (e) {
+            this.currentPage = event.currentTarget.getAttribute("data-page");
+            this.list_url = this.base_url+"/list?page="+this.currentPage;
+            this.fetchList();
+            this.genPagination()
         }
-
-    };
-    //----------------------------------------
-    records.init();
-    //----------------------------------------
-/*    $("#formCreate").submit(function (e) {
-        e.preventDefault();
-        var element = $(this);
-        var url = $(this).attr("action");
-        var data = $(this).serialize();
-        Common.ajaxHandler(element, url, data);
-    });*/
-    //----------------------------------------
-    //----------------------------------------
-    //----------------------------------------
-
-
-})(jQuery);// end of jquery
-
+        //-----------------------------------------
+    }
+});
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------

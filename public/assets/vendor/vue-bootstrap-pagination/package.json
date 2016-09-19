@@ -1,0 +1,88 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "vue-bootstrap-pagination",
+        "scope": null,
+        "escapedName": "vue-bootstrap-pagination",
+        "name": "vue-bootstrap-pagination",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "F:\\node\\adonis\\niddar"
+    ]
+  ],
+  "_from": "vue-bootstrap-pagination@latest",
+  "_id": "vue-bootstrap-pagination@1.11.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/vue-bootstrap-pagination",
+  "_nodeVersion": "4.2.4",
+  "_npmOperationalInternal": {
+    "host": "packages-5-east.internal.npmjs.com",
+    "tmp": "tmp/vue-bootstrap-pagination-1.11.0.tgz_1455966017829_0.1310026131104678"
+  },
+  "_npmUser": {
+    "name": "pogachar",
+    "email": "pogacar.jernej@gmail.com"
+  },
+  "_npmVersion": "2.14.12",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "vue-bootstrap-pagination",
+    "scope": null,
+    "escapedName": "vue-bootstrap-pagination",
+    "name": "vue-bootstrap-pagination",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/vue-bootstrap-pagination/-/vue-bootstrap-pagination-1.11.0.tgz",
+  "_shasum": "a59b3a7ae022b9bdf4bf5a073e7f696634de0be3",
+  "_shrinkwrap": null,
+  "_spec": "vue-bootstrap-pagination",
+  "_where": "F:\\node\\adonis\\niddar",
+  "author": {
+    "name": "pogachar"
+  },
+  "dependencies": {},
+  "description": "Pagination for vuejs with combination with bootstrap and Laravel's pagination",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "a59b3a7ae022b9bdf4bf5a073e7f696634de0be3",
+    "tarball": "https://registry.npmjs.org/vue-bootstrap-pagination/-/vue-bootstrap-pagination-1.11.0.tgz"
+  },
+  "files": [
+    "vue-bootstrap-pagination.js"
+  ],
+  "gitHead": "d92fe85363dc9235fcddf7fc3f1540dae530b09e",
+  "homepage": "https://github.com/Media24si/vue-pagination",
+  "keywords": [
+    "vue",
+    "component",
+    "bootstrap",
+    "laravel",
+    "pagination"
+  ],
+  "license": "MIT",
+  "main": "vue-bootstrap-pagination.js",
+  "maintainers": [
+    {
+      "name": "pogachar",
+      "email": "pogacar.jernej@gmail.com"
+    }
+  ],
+  "name": "vue-bootstrap-pagination",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.11.0"
+}

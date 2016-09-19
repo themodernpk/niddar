@@ -1,53 +1,126 @@
 {% extends "./../layout/admin.njk" %}
 //------------------------------------------------------------
+{% block page_specific_head %}
+    <link href="" rel="stylesheet" >
+{% endblock %}
+//------------------------------------------------------------
 {% block page_specific_footer %}
     <script src="{{ backend_assets_directory }}/pages/permission.js"></script>
 {% endblock %}
 //------------------------------------------------------------
 {% block content %}
+    <div id="vueApp">
 
-    <input type="text" name="base_url" value="{{ url }}" id="base_url" >
-    <input type="text" name="current_url" value="{{ current_url }}" id="current_url" >
-    <input type="hidden" name="_csrf" id="token" value="{{ csrfToken }}" />
+        <input type="hidden" name="base_url" v-model="base_url" value="{{ url }}" id="base_url">
+        <input type="hidden" name="current_url" v-model="current_url" value="{{ current_url }}" id="current_url">
+        <input type="hidden" name="_csrf" id="token" value="{{ csrfToken }}"/>
 
-
-
-    <!--content-->
-    <div class="container-fluid" >
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Permissions</h1>
-                <hr/>
+        <!--content-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Permissions</h1>
+                    <hr/>
+                </div>
             </div>
-            <div class="col-md-12">
 
-                <div class="pull-right btn-group">
-                    <button class="btn btn-sm btn-primary">Trashed (5)</button>
+            <div  class="row" style="margin-bottom: 20px">
+                <div class="col-md-6">
+
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" placeholder="Search">
+                    </div>
+
+
                 </div>
 
-                <div class="pull-right btn-group" style="margin-right: 5px">
-                    <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#create">Create</a>
-                    <button class="btn btn-sm btn-warning">Enable</button>
-                    <button class="btn btn-sm btn-success">Disable</button>
-                    <button class="btn btn-sm btn-danger">Delete</button>
+                <div class="col-md-6">
+
+                    <div class="pull-right btn-group">
+                        <button class="btn btn-sm btn-primary">Trashed (5)</button>
+                    </div>
+
+                    <div class="pull-right btn-group" style="margin-right: 5px">
+                        <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#create">Create</a>
+                        <button class="btn btn-sm btn-warning">Enable</button>
+                        <button class="btn btn-sm btn-success">Disable</button>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </div>
+
                 </div>
-                <br class="all">
-                <br class="all">
-            </div>
-            <div class="col-md-12" id="data-content">
-
             </div>
 
+            <div class="row">
+                <div class="col-md-12" id="data-content">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Slug</th>
+                            <th>Enabled</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in list">
+                            <td>[[item.id]]</td>
+                            <td>[[item.name]]</td>
+                            <td>[[item.slug]]</td>
+                            <td>[[item.enable]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                [[pagination|json]]
+
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+
+                        <li v-if="pagination.range.first"  >
+                            <a v-on:click="paginationClicked()"
+                               href="javascript:void(0)" data-page="[[pagination.range.first.number]]"><i class="fa fa-angle-double-left"></i></a>
+                        </li>
+
+                        <li v-if="pagination.range.previous"  >
+                            <a v-on:click="paginationClicked()"
+                               href="javascript:void(0)" data-page="[[pagination.range.previous.number]]"><i class="fa fa-angle-left"></i></a>
+                        </li>
+
+                        <li v-for="page in pagination.range.pages"
+                            v-bind:class="{'active': page.isCurrent }">
+                            <a v-on:click="paginationClicked()"
+                               href="javascript:void(0)" data-page="[[page.number]]">[[page.number]]</a>
+                        </li>
+
+
+                        <li v-if="pagination.range.next"  >
+                            <a v-on:click="paginationClicked()"
+                               href="javascript:void(0)" data-page="[[pagination.range.next.number]]"><i class="fa fa-angle-right"></i></a>
+                        </li>
+
+                        <li v-if="pagination.range.last"  >
+                            <a v-on:click="paginationClicked()"
+                               href="javascript:void(0)" data-page="[[pagination.range.last.number]]"><i class="fa fa-angle-double-right"></i></a>
+                        </li>
+
+                    </ul>
+                </nav>
+
+
+
+
+
+            </div>
         </div>
+        <!--/content-->
+
+        <!--create form-->
+        {% include "./partials/create.njk" %}
+        <!--/create form-->
+
+        <!--update form-->
+        {% include "./partials/update.njk" %}
+        <!--/update form-->
     </div>
-    <!--/content-->
-
-    <!--create form-->
-    {% include "./partials/create.njk" %}
-    <!--/create form-->
-
-    <!--update form-->
-    {% include "./partials/update.njk" %}
-    <!--/update form-->
-
 {% endblock %}

@@ -19,6 +19,8 @@
     "components-font-awesome": "^4.6.3",
     "bootstrap-css": "^3.3.6",
     "socket.io": "^1.4.8",
-    "nprogress": "^0.2.0"
+    "nprogress": "^0.2.0",
+    "vue": "^1.0.26",
+    "vue-resource": "^1.0.1"
   }
 }

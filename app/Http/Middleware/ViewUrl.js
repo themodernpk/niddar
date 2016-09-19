@@ -2,7 +2,6 @@
 const View = use('View')
 
 class ViewUrl {
-
   * handle (request, response, next) {
     View.global('url', request.url());
     View.global('query_string', request.all());

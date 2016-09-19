@@ -4,6 +4,7 @@ const Lucid = use('Lucid');
 const Validator = use('Validator');
 const Encryption = use('Encryption');
 const Niddar = use("App/Niddar");
+const Setting = use("App/Model/Niddar/Setting");
 const table = "core_permissions";
 var result;
 
@@ -117,9 +118,9 @@ class Permission extends Lucid {
   }
 
   //---------------------------------------------
-  *listItems()
+  *listItems(page)
   {
-    const list = yield Permission.query().orderBy('id', 'desc').paginate(1, 5);
+    const list = yield Permission.query().orderBy('id', 'desc').paginate(page, Setting.recordPerPage());
     result = {
       status: "success",
       data: list.toJSON()
